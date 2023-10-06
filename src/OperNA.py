@@ -59,7 +59,7 @@ def process_na(option: str, seqs: list) -> list:
         "revcomp": reverse_complement_seq,
     }
     if not (isinstance(seqs, list)):
-        raise ValueError('Invalid input!')
+        raise ValueError("Invalid data format!")
     for seq in seqs:
         sequence_check(seq)
     if option in {"trans", "rev", "comp", "revcomp"}:
@@ -68,4 +68,4 @@ def process_na(option: str, seqs: list) -> list:
             result_sequences.append(options_dict[option](seq))
         return result_sequences
     else:
-        raise ValueError('Invalid operation!')
+        raise ValueError("Invalid operation!")
