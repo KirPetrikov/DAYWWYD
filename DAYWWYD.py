@@ -13,13 +13,14 @@ def process_na(option: str, seqs: list) -> list:
         "comp": nas.complement_seq,
         "revcomp": nas.reverse_complement_seq,
     }
-    if not (option in {"trans", "rev", "comp", "revcomp"}):
-        raise ValueError('Invalid operation!')
     if not (isinstance(seqs, list)):
-        raise ValueError('Invalid input!')
+        raise ValueError("Invalid data format!")
     for seq in seqs:
         nas.sequence_check(seq)
-    result_sequences = []
-    for seq in seqs:
-        result_sequences.append(options_dict[option](seq))
-    return result_sequences
+    if option in {"trans", "rev", "comp", "revcomp"}:
+        result_sequences = []
+        for seq in seqs:
+            result_sequences.append(options_dict[option](seq))
+        return result_sequences
+    else:
+        raise ValueError("Invalid operation!")
