@@ -9,7 +9,7 @@ def sequence_check(sequence: str):
     if not (seq_set_tmp <= valid_nucleotides):
         raise ValueError("Wrong sequence! Invalid character.")
     if (("T" in seq_set_tmp) or ("t" in seq_set_tmp)) and (("U" in seq_set_tmp) or ("u" in seq_set_tmp)):
-        raise ValueError("Wrong sequence! DNA/RNA chimera.")
+        raise ValueError("Wrong sequence! DNA/RNA chimera does not allowed.")
 
 
 def transcribe_seq(sequence: str) -> str:
@@ -31,14 +31,14 @@ def complement_seq(sequence: str) -> str:
     if ("T" in sequence) or ("t" in sequence):
         complement_dict = {
             "a": "t", "A": "T",
-            "t": "a", "T": "a",
+            "t": "a", "T": "A",
             "g": "C", "G": "c",
             "c": "g", "C": "G"
         }
     else:
         complement_dict = {
             "a": "u", "A": "U",
-            "u": "a", "U": "a",
+            "u": "a", "U": "A",
             "g": "C", "G": "c",
             "c": "g", "C": "G"
         }
@@ -58,8 +58,10 @@ def process_na(option: str, seqs: list) -> list:
         "comp": complement_seq,
         "revcomp": reverse_complement_seq,
     }
-    if not (set(option) <= {"trans", "rev", "comp", "revcomp"}):
-        raise ValueError("Invalid operation")
+    if not (option in {"trans", "rev", "comp", "revcomp"}):
+        raise ValueError('Invalid operation!')
+    if not (isinstance(seqs, list)):
+        raise ValueError('Invalid input!')
     for seq in seqs:
         sequence_check(seq)
     result_sequences = []
