@@ -4,7 +4,7 @@
 > *This is the repo for the homework of the BI Python 2023 course*
 
 DAYWWYD is script for different bioinformatics operations with sequencecs.
-It includes three founctions:
+It includes three functions:
 - `process_na` - operations on nucleic acids sequences
 - `process_prot` - operations on proteins (amino acids sequenses)
 - `filter_fastq` - filtering sequences from fastq files
@@ -28,10 +28,10 @@ Returns list of perocessed sequences, the letters case is preserved.
 **Valid characters** for sequences: `A, T, G, C, U, a, t, g, c, u`. Chimeric DNA-RNA sequences, i.e. including both `T, t`, and `U, u` aren't allowed.
 
 **Options**:
-- `trans` - returns the transcribed sequence. If the original sequence contained `U, u` then they will be replaced by `T, t` as for reverse transcription.
-- `rev` - returns the inverted sequence from backward to forward.
-- `comp` - returns the complementary sequence.
-- `revcomp` - returns the inverted complementary sequence.
+- `trans` - returns the transcribed sequence. If the original sequence contained `U, u` then they will be replaced by `T, t` as for reverse transcription
+- `rev` - returns the inverted sequence, from backward to forward
+- `comp` - returns the complementary sequence
+- `revcomp` - returns the inverted complementary sequence
 
 **Examples**
 ```python
@@ -100,7 +100,7 @@ filter_fastq(fastq, gc_bounds = 10)
 ## Autors
 - Kirill Petrikov - main development
 
-Also parts of proteins processig code: Yury Popov, Gulgaz Muradova.
+Also parts of proteins processig code (`prot_seq_tool.py`): Yury Popov, Gulgaz Muradova.
 
 
 
