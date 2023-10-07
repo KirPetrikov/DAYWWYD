@@ -1,4 +1,4 @@
-""""Provides different operations with bioinformatics data:
+"""Provides different operations with bioinformatics data:
 
     Requirements (scripts must be in ./src):
     fastq_filter.py
@@ -19,7 +19,7 @@ def process_na(option: str, seqs: list) -> list:
     - comp: returns the complementary sequence
     - revcomp: returns the inverted complementary sequence
     """
-    options_dict = {
+    valid_options = {
         "trans": nas.transcribe_seq,
         "rev": nas.reverse_seq,
         "comp": nas.complement_seq,
@@ -29,10 +29,10 @@ def process_na(option: str, seqs: list) -> list:
         raise ValueError("Invalid data format!")
     for seq in seqs:
         nas.sequence_check(seq)
-    if option in {"trans", "rev", "comp", "revcomp"}:
+    if option in set(valid_options):
         result_sequences = []
         for seq in seqs:
-            result_sequences.append(options_dict[option](seq))
+            result_sequences.append(valid_options[option](seq))
         return result_sequences
     else:
         raise ValueError("Invalid operation!")
@@ -82,7 +82,7 @@ def filter_fastq(seqs: dict, gc_bounds: tuple = (20, 80), len_bounds: tuple = (0
     for key, value in seqs.items():
         gc_condition_check = ff.is_seq_pass_gc_filter(value[0], gc_lower, gc_upper)
         len_condition_check = ff.is_seq_pass_len_filter(value[0], len_lower, len_upper)
-        phred__condition_check = ff.is_seq_pass_phred_filter(value[1], quality_threshold)
-        if gc_condition_check and len_condition_check and phred__condition_check:
+        phred_condition_check = ff.is_seq_pass_phred_filter(value[1], quality_threshold)
+        if gc_condition_check and len_condition_check and phred_condition_check:
             selected_seqs[key] = seqs[key]
     return selected_seqs
