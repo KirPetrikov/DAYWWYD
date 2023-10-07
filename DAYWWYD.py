@@ -52,17 +52,17 @@ def process_prot(option: str, seqs: list) -> list:
         raise ValueError("Invalid operation!")
 
 
-def process_fastq(seqs: dict, gc_bounds: tuple = (20, 80), len_bounds: tuple = (0, 2 ** 32),
-                  quality_threshold: int = 0) -> dict:
+def filter_fastq(seqs: dict, gc_bounds: tuple = (20, 80), len_bounds: tuple = (0, 2 ** 32),
+                 quality_threshold: int = 0) -> dict:
     gc_lower = ff.parse_intervals(gc_bounds)[0]
     gc_upper = ff.parse_intervals(gc_bounds)[1]
     len_lower = ff.parse_intervals(len_bounds)[0]
     len_upper = ff.parse_intervals(len_bounds)[1]
     selected_seqs = {}
     for key, value in seqs.items():
-        gc_condtition_check = ff.is_seq_pass_gc_filter(value[0], gc_lower, gc_upper)
-        len_condtition_check = ff.is_seq_pass_len_filter(value[0], len_lower, len_upper)
+        gc_condition_check = ff.is_seq_pass_gc_filter(value[0], gc_lower, gc_upper)
+        len_condition_check = ff.is_seq_pass_len_filter(value[0], len_lower, len_upper)
         phred__condition_check = ff.is_seq_pass_phred_filter(value[1], quality_threshold)
-        if gc_condtition_check and len_condtition_check and phred__condition_check:
+        if gc_condition_check and len_condition_check and phred__condition_check:
             selected_seqs[key] = seqs[key]
     return selected_seqs
