@@ -1,4 +1,9 @@
-""""Provides different operations with bioinformatics data
+""""Provides different operations with bioinformatics data:
+
+    Requirements (scripts must be in ./src):
+    fastq_filter.py
+    na_seq_tool.py
+    prot_seq_tool.py
 """
 
 import src.na_seq_tool as nas
@@ -7,7 +12,12 @@ import src.fastq_filter as ff
 
 
 def process_na(option: str, seqs: list) -> list:
-    """Function process list of nucleotide sequences
+    """Performs operations on list of nucleotide sequences
+    Valid options:
+    - trans: returns the transcribed sequence (U, u <-> T, t)
+    - rev: returns the inverted sequence from backward to forward
+    - comp: returns the complementary sequence
+    - revcomp: returns the inverted complementary sequence
     """
     options_dict = {
         "trans": nas.transcribe_seq,
@@ -29,9 +39,13 @@ def process_na(option: str, seqs: list) -> list:
 
 
 def process_prot(option: str, seqs: list) -> list:
-    """Performs operations on amino acids sequences:
-    - calculate protein lengths, molecular weights, isoelectric points and GRAVY values
-    - rewrite 1-letter sequence to 3-letter sequence
+    """Performs operations on amino acids sequences
+    Valid options:
+    - gravy: calculate GRAVY values
+    - iso: calculate isoelectric points
+    - molw: calculate molecular weights
+    - lengths: calculate sequences lengths
+    - rewrite: rewrite 1-letter sequence to 3-letter sequence
     """
     if not (isinstance(seqs, list)):
         raise ValueError("Invalid data format!")
@@ -39,9 +53,10 @@ def process_prot(option: str, seqs: list) -> list:
     valid_options = {
         "gravy": ps.calc_gravy,
         "iso": ps.calc_iso_point,
-        "rename": ps.transform_to_three_letters,
+        "molw": ps.calc_protein_mass,
         "lengths": ps.sequence_length,
-        "molw": ps.calc_protein_mass}
+        "rewrite": ps.transform_to_three_letters
+    }
     if option in valid_options:
         results = []
         for seq in seqs:
@@ -54,6 +69,11 @@ def process_prot(option: str, seqs: list) -> list:
 
 def filter_fastq(seqs: dict, gc_bounds: tuple = (20, 80), len_bounds: tuple = (0, 2 ** 32),
                  quality_threshold: int = 0) -> dict:
+    """"Filters out sequences that satisfy the specified conditions:
+        - GC-content, inside interval include borders, or, if single value, not bigger than specified
+        - length, inside interval include borders, or, if single value, not bigger than specified
+        - average phred scores, not less than specified
+    """
     gc_lower = ff.parse_intervals(gc_bounds)[0]
     gc_upper = ff.parse_intervals(gc_bounds)[1]
     len_lower = ff.parse_intervals(len_bounds)[0]
