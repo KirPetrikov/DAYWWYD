@@ -1,9 +1,16 @@
-"""Provides different operations with bioinformatics data:
+"""Provides different operations with bioinformatics data
+    using three functions:
+    - process_na(): nucleic acids sequences conversion to transcript, inverted,
+                    complement or revers complement
+    - process_prot(): calculation of protein lengths, molecular weights,
+                      isoelectric points and GRAVY values, rewrite 1-letter to 3-letter
+    - filter_fastq(): filtering sequences from fastq dict by
+                      gc-content, length, phred quality
 
     Requirements (scripts must be in ./src):
     fastq_filter.py
     na_seq_tool.py
-    prot_seq_tool.py
+    prot_seq_tool.pys
 """
 
 import src.na_seq_tool as nas
