@@ -15,6 +15,7 @@ Each of that functions requires an service module to work, which should be locat
 - `process_na` depend on `na_seq_tool.py`
 - `process_prot` depend on `prot_seq_tool.py`
 - `filter_fastq` depend on `fastq_filter.py`
+
 Functions work independently of one another and of modules of other functions.
 
 ## Functions descriptions
@@ -48,11 +49,11 @@ Returns list of perocessed sequences.
 **Valid sequence** should contain 1-letter symbols (case insensetive) of 20 common amino acids ('U' for selenocysteine and 'O' for pyrrolysine doesn't allowed).
 
 **Options**:
-- 'lengths': return list with numbers of AA in each sequence(s)
-- 'molw':return list of protein molecular weight (use the average molecular weight of AA, 110 Da)
-- 'iso': return list of approximate isoelectric point of given amino acids sequence
-- 'gravy': return list of GRAVY (grand average of hydropathy) values
-- 'rewrite': return list of sequences in 3-letter AA code (AA separated by hyphens)
+- `lengths`: return list with numbers of AA in each sequence(s)
+- `molw`:return list of protein molecular weight (use the average molecular weight of AA, 110 Da)
+- `iso`: return list of approximate isoelectric point of given amino acids sequence
+- `gravy`: return list of GRAVY (grand average of hydropathy) values
+- `rewrite`: return list of sequences in 3-letter AA code (AA separated by hyphens)
 
 **Examples**
 ```python
@@ -66,25 +67,26 @@ Filters out sequences that satisfy the specified conditions:
 - length, inside interval include borders, or, if single value, not bigger than specified
 - average phred scores, not less than specified
 
-**Defaults filters parametrs are**:
-- `gc_bounds = (20, 80)`
-- `len_bounds =(0, 2**32)`
-- `quality_threshold = 0`
-
-Accepts four variables:
+**Accepts four variables**:
 - `seqs`: dictionary with sequences, names and phred scores
 - `gc_bounds`: values for GC-content filter
 - `len_bounds`: values for lenght filter
-- `quality_threshold`: value for phred scores filter (as `int`)
+- `quality_threshold`: value for phred scores filter (`float` or `int`)
 Returns dictionary with entrys that satisfy the spesified conditions.
 
-**Input dictionary** must be of the form: `['sequence title'] = ('sequense', 'phred scores')`.
+**Input fastq dictionary** must be of the form: `['sequence title'] = ('sequense', 'phred scores')`.
 Function is case insensetive.
 
 **Intervals** `gc_bounds` and `len_bounds` must be:
 - as tuple `(lover_bound, upper_bound)`
 - as single value (`float` or `int`) for upper bound
-*Bounds are included in filter*
+
+*Intervals bounds are included in filter*
+
+**Defaults filters parametrs are**:
+- `gc_bounds = (20, 80)`
+- `len_bounds = (0, 2**32)`
+- `quality_threshold = 0`
 
 **Examples**
 
