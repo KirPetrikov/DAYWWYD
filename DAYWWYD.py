@@ -74,8 +74,8 @@ def process_prot(option: str, seqs: list) -> list:
         raise ValueError("Invalid operation!")
 
 
-def filter_fastq(seqs: dict, gc_bounds: tuple = (20, 80), len_bounds: tuple = (0, 2 ** 32),
-                 quality_threshold: int = 0) -> dict:
+def filter_fastq(seqs: dict, gc_bounds: int | float | tuple = (20, 80), len_bounds: int | float | tuple = (0, 2 ** 32),
+                 quality_threshold: int | float = 0) -> dict:
     """"Filters out sequences that satisfy the specified conditions:
         - GC-content, inside interval include borders, or, if single value, not bigger than specified
         - length, inside interval include borders, or, if single value, not bigger than specified

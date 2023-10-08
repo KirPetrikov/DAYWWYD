@@ -33,7 +33,7 @@ def calc_gc_content(seq: str) -> float:
     return 100 * gc_sum / len(seq)
 
 
-def is_seq_pass_gc_filter(seq_to_check_gc: str, gc_min: float, gc_max: float) -> bool:
+def is_seq_pass_gc_filter(seq_to_check_gc: str, gc_min: int | float, gc_max: int | float) -> bool:
     """Checking sequences in accordance with specified filters"""
     is_lower_pass = calc_gc_content(seq_to_check_gc) >= gc_min
     is_upper_pass = calc_gc_content(seq_to_check_gc) <= gc_max

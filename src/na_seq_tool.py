@@ -6,7 +6,7 @@
     - sequence check for valid characters
     - sequence conversion to transcript, inverted, complement or revers complement
 
-    Ancestor: OperNA v2.0 (ex dna_rna_tools) - after OperNA your nucleic acids will change
+    Ancestor: OperNA v2.0 (ex dna_rna_tools) - send your sequences to OperNA
 """
 
 
