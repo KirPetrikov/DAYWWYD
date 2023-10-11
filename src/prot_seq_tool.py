@@ -140,10 +140,10 @@ def transform_to_three_letters(seq: str) -> str:
                    'W': 'Trp',
                    'F': 'Phe',
                    'C': 'Cys'}
-    new_name = ''
-    for amino_acid in seq:
-        new_name += amino_acids[amino_acid] + '-'
-    return new_name[:-1]
+    new_protein = []
+    for aminoacid in seq:
+        new_protein.append(amino_acids[aminoacid.upper()])
+    return "-".join(new_protein)
 
 
 def sequence_length(seq: str) -> int:

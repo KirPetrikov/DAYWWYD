@@ -18,6 +18,7 @@ def sequence_check(sequence: str):
     if not (seq_set_tmp <= valid_nucleotides):
         raise ValueError('Wrong sequence! Invalid character.')
     if (('T' in seq_set_tmp) or ('t' in seq_set_tmp)) and (('U' in seq_set_tmp) or ('u' in seq_set_tmp)):
+        # к одному регистру перевести и проверять T и U
         raise ValueError('Wrong sequence! DNA/RNA chimera does not allowed.')
 
 
@@ -38,7 +39,8 @@ def reverse_seq(sequence: str) -> str:
 
 
 def complement_seq(sequence: str) -> str:
-    if ('T' in sequence) or ('t' in sequence):
+    if 'T' in sequence.upper():
+        # к одному регистру перевести и проверять T и U
         complement_dict = {
             'a': 't', 'A': 'T',
             't': 'a', 'T': 'A',

@@ -11,25 +11,21 @@
 """
 
 
-def parse_intervals(interval) -> tuple:  # можно добавить проверку неотриц. и min<max
+def parse_intervals(interval: int | float | tuple) -> tuple:  # можно добавить проверку неотриц. и min<max
     """Check intervals input and convert int to tuple"""
     if isinstance(interval, int) or isinstance(interval, float):
         upper_bound = interval
-        lover_bound = 0
+        lower_bound = 0
     else:
         upper_bound = interval[1]
-        lover_bound = interval[0]
-    bounds = (lover_bound, upper_bound)
+        lower_bound = interval[0]
+    bounds = (lower_bound, upper_bound)
     return bounds
 
 
 def calc_gc_content(seq: str) -> float:
     """Calculate GC-content"""
-    gc_count = {'g': 0, 'G': 0, 'c': 0, 'C': 0}
-    for nuc in seq:
-        if nuc in gc_count:
-            gc_count[nuc] += 1
-    gc_sum = gc_count['g'] + gc_count['G'] + gc_count['c'] + gc_count['C']
+    gc_sum = seq.upper().count("G") + seq.upper().count("C")
     return 100 * gc_sum / len(seq)
 
 
@@ -54,6 +50,7 @@ def calc_mean_phred(fastq_phred: str) -> float:
                     ',': 11, '-': 12, '.': 13, '/': 14, '0': 15, '1': 16, '2': 17, '3': 18, '4': 19, '5': 20,
                     '6': 21, '7': 22, '8': 23, '9': 24, ':': 25, ';': 26, '<': 27, '=': 28, '>': 29, '?': 30,
                     '@': 31, 'A': 32, 'B': 33, 'C': 34, 'D': 35, 'E': 36, 'F': 37, 'G': 38, 'H': 39, 'I': 40}
+    # сделать через ord
     scores_sum = 0
     for i in fastq_phred:
         scores_sum += phred_scores[i]

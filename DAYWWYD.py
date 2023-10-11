@@ -13,6 +13,7 @@
     prot_seq_tool.pys
 """
 
+# импортировать сразу нужные функции from ... import
 import src.na_seq_tool as nas
 import src.prot_seq_tool as ps
 import src.fastq_filter as ff
@@ -87,6 +88,8 @@ def filter_fastq(seqs: dict, gc_bounds: int | float | tuple = (20, 80), len_boun
     len_upper = ff.parse_intervals(len_bounds)[1]
     selected_seqs = {}
     for key, value in seqs.items():
+        # распаковать, т.к. если не знаешь данные, то непонятно
+        # всё равно надо исправлять в новом ДЗ
         gc_condition_check = ff.is_seq_pass_gc_filter(value[0], gc_lower, gc_upper)
         len_condition_check = ff.is_seq_pass_len_filter(value[0], len_lower, len_upper)
         phred_condition_check = ff.is_seq_pass_phred_filter(value[1], quality_threshold)
