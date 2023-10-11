@@ -50,7 +50,7 @@ Returns list of perocessed sequences.
 
 **Options**:
 - `lengths`: return list with numbers of AA in each sequence(s)
-- `molw`:return list of protein molecular weight (use the average molecular weight of AA, 110 Da)
+- `molw`: return list of protein molecular weight (use the average molecular weight of AA, 110 Da)
 - `iso`: return list of approximate isoelectric point of given amino acids sequence
 - `gravy`: return list of GRAVY (grand average of hydropathy) values
 - `rewrite`: return list of sequences in 3-letter AA code (AA separated by hyphens)
