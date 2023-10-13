@@ -19,7 +19,7 @@ Each of that functions requires an service module to work, which should be locat
 Functions work independently of one another and of modules of other functions.
 
 ## Functions descriptions
-### `process_na(option, seqs)`
+### `process_na(operation, seqs)`
 
 Accepts two variables:
 - `option` defines defines the operation to be applied
@@ -28,7 +28,7 @@ Returns list of perocessed sequences, the letters case is preserved.
 
 **Valid characters** for sequences: `A, T, G, C, U, a, t, g, c, u`. Chimeric DNA-RNA sequences, i.e. including both `T, t`, and `U, u` aren't allowed.
 
-**Options**:
+**Operations**:
 - `trans` returns the transcribed sequence. If the original sequence contained `U, u` then they will be replaced by `T, t` as for reverse transcription
 - `rev` returns the inverted sequence, from backward to forward
 - `comp` returns the complementary sequence
@@ -40,7 +40,7 @@ process_na('trans', ['ATG']) # [AUG]
 process_na('rev', ['aTgC', 'AtGc']) # ['CgTa', 'cGtA']
 ```
 
-### `process_prot(option, seqs)`
+### `process_prot(operation, seqs)`
 Accepts two variables:
 - `option` defines defines the operation to be applied
 - `seqs` list of strings with sequences to process
@@ -48,7 +48,7 @@ Returns list of perocessed sequences.
 
 **Valid sequence** should contain 1-letter symbols (case insensetive) of 20 common amino acids ('U' for selenocysteine and 'O' for pyrrolysine doesn't allowed).
 
-**Options**:
+**Operations**:
 - `lengths` return list with numbers of AA in each sequence(s)
 - `molw` return list of protein molecular weight (use the average molecular weight of AA, 110 Da)
 - `iso` return list of approximate isoelectric point of given amino acids sequence
@@ -61,27 +61,25 @@ process_prot('iso', ['ACGTWWA', 'ilattwp']) # [5.8, 6.0]
 process_prot('rename', ['ACGTwwa']) # ['Ala-Cys-Gly-Thr-Trp-Trp-Ala']
 ```
 
-### `filter_fastq(seqs, gc_bounds, len_bounds, quality_threshold)`
-Filters out sequences that satisfy the specified conditions:
+### `filter_fastq(input_path, gc_bounds, len_bounds, quality_threshold, output_filename)`
+Creates from fastq file new fastq file with filtered sequences based on specified conditions:
 - GC-content, inside interval include borders, or, if single value, not bigger than specified
 - length, inside interval include borders, or, if single value, not bigger than specified
 - average phred scores, not less than specified
 
-**Accepts four variables**:
-- `seqs` dictionary with sequences, names and phred scores
-- `gc_bounds` values for GC-content filter
+**Options:**
+- `input_path` path to the fastq file to be processed (function is case insensetive)
+- `gc_bounds` values for GC-content filter.
 - `len_bounds` values for lenght filter
 - `quality_threshold` value for phred scores filter (`float` or `int`)
-Returns dictionary with entrys that satisfy the spesified conditions.
+- `output_filename` you can specified (defaults is `filtered.fastq`)
 
-**Input fastq dictionary** must be of the form: `['sequence title'] = ('sequense', 'phred scores')`.
-Function is case insensetive.
+**Intervals** for `gc_bounds` and `len_bounds` must be specified (*with bounds are included*):
+- as tuple `(lower_bound, upper_bound)`
 
-**Intervals** `gc_bounds` and `len_bounds` must be:
-- as tuple `(lover_bound, upper_bound)`
-- as single value (`float` or `int`) for upper bound
+or
 
-*Intervals bounds are included in filter*
+- as single value (`float` or `int`) for upper bound only
 
 **Defaults filters parametrs are**:
 - `gc_bounds = (20, 80)`
@@ -91,12 +89,25 @@ Function is case insensetive.
 **Examples**
 
 ```python
-fastq = {"@A": ("GTGCATGCGTGCCTGC", ";AD8@.=BB<7:D.B"),
-         "@B":("ATATTA", "/++*==")
-        }
+"""file.fastq
+@A
+GTGCATGCGTGCCTGC
++
+;AD8@.=BB<7:D.B
+@B
+ATATTA
++
+/++*==
+"""
 
 filter_fastq(fastq, gc_bounds = 10)
-### {"@B":("ATATTA", "/++*==")}
+
+"""fastq_filtrator_resuls/filtered.fastq
+@B
+ATATTA
++
+/++*==
+"""
 ```
 
 ## Autors
