@@ -72,7 +72,7 @@ Creates from fastq file new fastq file with filtered sequences based on specifie
 - `gc_bounds` values for GC-content filter.
 - `len_bounds` values for lenght filter
 - `quality_threshold` value for phred scores filter (`float` or `int`)
-- `output_filename` you can specified (defaults is `filtered.fastq`)
+- `output_filename` you can specified (defaults is input file)
 
 **Intervals** for `gc_bounds` and `len_bounds` must be specified (*with bounds are included*):
 - as tuple `(lower_bound, upper_bound)`
