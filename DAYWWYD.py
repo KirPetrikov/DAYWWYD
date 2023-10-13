@@ -101,7 +101,7 @@ def filter_fastq(input_path: str,
         if gc_condition_check and len_condition_check and phred_condition_check:
             selected_seqs[seq_name] = seqs[seq_name]
     if output_filename is None:
-        output_filename = 'filtered'
+        output_filename = input_path
     output_filename += '.fastq'
     write_fastq(selected_seqs, output_filename)
     return
