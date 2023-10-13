@@ -17,6 +17,8 @@
 import src.na_seq_tool as nas
 import src.prot_seq_tool as ps
 import src.fastq_filter as ff
+from src.parse_fastq import parse_fastq
+from src.parse_fastq import write_fastq
 
 
 def process_na(option: str, seqs: list) -> list:
@@ -75,24 +77,30 @@ def process_prot(option: str, seqs: list) -> list:
         raise ValueError("Invalid operation!")
 
 
-def filter_fastq(seqs: dict, gc_bounds: int | float | tuple = (20, 80), len_bounds: int | float | tuple = (0, 2 ** 32),
-                 quality_threshold: int | float = 0) -> dict:
-    """"Filters out sequences that satisfy the specified conditions:
+def filter_fastq(input_path: str,
+                 gc_bounds: int | float | tuple = (20, 80),
+                 len_bounds: int | float | tuple = (0, 2 ** 32),
+                 quality_threshold: int | float = 0,
+                 output_filename: str = None,):
+    """"Filters out sequences from fastq file by the specified conditions:
         - GC-content, inside interval include borders, or, if single value, not bigger than specified
         - length, inside interval include borders, or, if single value, not bigger than specified
         - average phred scores, not less than specified
+        Creates new file with results in 'fastq_filtrator_resuls' folder
     """
+    seqs = parse_fastq(input_path)
     gc_lower = ff.parse_intervals(gc_bounds)[0]
     gc_upper = ff.parse_intervals(gc_bounds)[1]
     len_lower = ff.parse_intervals(len_bounds)[0]
     len_upper = ff.parse_intervals(len_bounds)[1]
     selected_seqs = {}
-    for key, value in seqs.items():
-        # распаковать, т.к. если не знаешь данные, то непонятно
-        # всё равно надо исправлять в новом ДЗ
-        gc_condition_check = ff.is_seq_pass_gc_filter(value[0], gc_lower, gc_upper)
-        len_condition_check = ff.is_seq_pass_len_filter(value[0], len_lower, len_upper)
-        phred_condition_check = ff.is_seq_pass_phred_filter(value[1], quality_threshold)
+    for seq_name, (seq, comm, phred) in seqs.items():
+        gc_condition_check = ff.is_seq_pass_gc_filter(seq, gc_lower, gc_upper)
+        len_condition_check = ff.is_seq_pass_len_filter(seq, len_lower, len_upper)
+        phred_condition_check = ff.is_seq_pass_phred_filter(phred, quality_threshold)
         if gc_condition_check and len_condition_check and phred_condition_check:
-            selected_seqs[key] = seqs[key]
-    return selected_seqs
+            selected_seqs[seq_name] = seqs[seq_name]
+    if output_filename is None:
+        output_filename = input_path
+    write_fastq(selected_seqs, output_filename)
+    return
