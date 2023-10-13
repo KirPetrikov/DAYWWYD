@@ -28,7 +28,6 @@ def write_fastq(fastq_dict: dict, output_filename: str):
        Create folder 'fastq_filtrator_resuls'
        and create file 'output_filename.fastq' in it
     """
-    output_filename += '.fastq'
     output_folder = 'fastq_filtrator_resuls'
     if not os.path.exists(output_folder):
         makedirs(output_folder)
