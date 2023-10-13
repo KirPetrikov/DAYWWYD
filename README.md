@@ -22,7 +22,7 @@ Functions work independently of one another and of modules of other functions.
 ### `process_na(operation, seqs)`
 
 Accepts two variables:
-- `option` defines defines the operation to be applied
+- `operation` defines defines the operation to be applied
 - `seqs` list of strings with sequences to process
 Returns list of perocessed sequences, the letters case is preserved.
 
@@ -42,7 +42,7 @@ process_na('rev', ['aTgC', 'AtGc']) # ['CgTa', 'cGtA']
 
 ### `process_prot(operation, seqs)`
 Accepts two variables:
-- `option` defines defines the operation to be applied
+- `operation` defines defines the operation to be applied
 - `seqs` list of strings with sequences to process
 Returns list of perocessed sequences.
 
