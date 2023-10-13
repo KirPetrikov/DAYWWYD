@@ -21,7 +21,7 @@ from src.parse_fastq import parse_fastq
 from src.parse_fastq import write_fastq
 
 
-def process_na(option: str, seqs: list) -> list:
+def process_na(operation: str, seqs: list) -> list:
     """Performs operations on list of nucleotide sequences
     Valid options:
     - trans: returns the transcribed sequence (U, u <-> T, t)
@@ -39,16 +39,16 @@ def process_na(option: str, seqs: list) -> list:
         raise ValueError("Invalid data format!")
     for seq in seqs:
         nas.sequence_check(seq)
-    if option in set(valid_options):
+    if operation in set(valid_options):
         result_sequences = []
         for seq in seqs:
-            result_sequences.append(valid_options[option](seq))
+            result_sequences.append(valid_options[operation](seq))
         return result_sequences
     else:
         raise ValueError("Invalid operation!")
 
 
-def process_prot(option: str, seqs: list) -> list:
+def process_prot(operation: str, seqs: list) -> list:
     """Performs operations on amino acids sequences
     Valid options:
     - gravy: calculate GRAVY values
@@ -67,10 +67,10 @@ def process_prot(option: str, seqs: list) -> list:
         "lengths": ps.sequence_length,
         "rewrite": ps.transform_to_three_letters
     }
-    if option in valid_options:
+    if operation in valid_options:
         results = []
         for seq in seqs:
-            result_tmp = valid_options[option](seq.upper())
+            result_tmp = valid_options[operation](seq.upper())
             results.append(result_tmp)
         return results
     else:
