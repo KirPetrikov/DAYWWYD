@@ -11,9 +11,9 @@ def parse_gbk_to_list(path_to_file: str) -> list:
        [
             ['First CDS coordinates',
             'gene (if available) or CDS coordinates',
-            'translation (if available) of empty
+            'translation (if available) or empty
             ],
-            ['Second CDS' ...]
+            ['Second CDS', 'gene/CDS', 'translation'],
             etc.
        ]
     """
@@ -37,16 +37,3 @@ def parse_gbk_to_list(path_to_file: str) -> list:
                 counter += 1
                 result_gbk_list.append([line.strip('CDS \n'), line.strip('CDS \n'), ''])
     return result_gbk_list
-
-
-
-my_list = parse_gbk_to_list('../../HW6_Files/example_data/example_gbk.gbk')
-
-print(my_list)
-
-# arcC1_2
-# complement(928823..930448)
-# complement(930496..931266)
-# mocA
-# ygfK
-# ssnA
