@@ -1,6 +1,8 @@
 """Process files
 """
 
+from src.parse_gbk import parse_gbk_to_list
+
 
 def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = None):
     """Convert sequences in fasta files
@@ -26,7 +28,22 @@ def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = Non
             fasta_oneline.write(line + '\n')
 
 
-def select_genes_from_gbk_to_fasta(input_gbk: str, genes, n_before, n_after, output_fasta: str = None):
+def select_genes_from_gbk_to_fasta(input_gbk: str,
+                                   genes: list, n_before: int = 1,
+                                   n_after: int = 1,
+                                   output_fasta: str = None):
     if output_fasta is None:
-        output_fasta = input_gbk
-    pass
+        output_fasta = 'selected_genes.fasta'
+    gbk_list = parse_gbk_to_list(input_gbk)
+    selected_genes_idxs = []
+    for gene_to_check in genes:
+        for idx, gbk_CDS in enumerate(gbk_list):
+            if gene_to_check == gbk_CDS[1]:  # разобраться с проверкой доп. символов
+                for idx_tmp in range(idx - n_before, idx):
+                    selected_genes_idxs.append(idx_tmp)
+                for idx_tmp in range(idx + 1, idx + n_after + 1):
+                    selected_genes_idxs.append(idx_tmp)
+    with open(output_fasta, mode='w') as result_fasta:
+        for selected_idx in selected_genes_idxs:
+            result_fasta.write('>' + gbk_list[selected_idx][1] + '\n')
+            result_fasta.write(gbk_list[selected_idx][2] + '\n')
