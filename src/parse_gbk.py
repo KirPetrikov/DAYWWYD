@@ -9,12 +9,11 @@ def parse_gbk_to_list(path_to_file: str) -> list:
     """Parse gbk-file by CDS in order of appearance
        to list of lists as:
        [
-            ['First CDS coordinates',
-            'gene (if available) or CDS coordinates',
-            'translation (if available) or empty
-            ],
-            ['Second CDS', 'gene/CDS', 'translation'],
-            etc.
+        ['First CDS coordinates',
+         'gene (if available) or CDS coordinates',
+         'translation (if available) or empty'],
+        ['Second CDS', 'gene/CDS', 'translation'],
+        etc.
        ]
     """
     with open(path_to_file) as file:

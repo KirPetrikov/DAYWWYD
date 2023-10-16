@@ -1,4 +1,9 @@
-"""Process files
+"""Provides operations with fasta and gbk files
+   Includes two functions:
+   - conversion multiline fasta to oneline
+   - selection of up- and downstream genes
+     from gbk-file relative to given ones
+     and according to the specified ranges
 """
 
 from src.parse_gbk import parse_gbk_to_list
@@ -10,8 +15,8 @@ def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = Non
        to single line entry
     """
     if output_fasta is None:
-        output_fasta = input_fasta
-    output_fasta += '.fastq'
+        output_fasta = 'one_line_fasta'
+    output_fasta += '.fasta'
     with open(input_fasta) as fasta_multiline:
         my_list = [fasta_multiline.readline().strip()]
         seq = ''
@@ -29,9 +34,15 @@ def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = Non
 
 
 def select_genes_from_gbk_to_fasta(input_gbk: str,
-                                   genes: list, n_before: int = 1,
+                                   genes: list,
+                                   n_before: int = 1,
                                    n_after: int = 1,
                                    output_fasta: str = None):
+    """Select from gbk-file and write to fasta-file
+       genes with their translation
+       from specified ranges around genes
+       specified by names.
+    """
     if output_fasta is None:
         output_fasta = 'selected_genes.fasta'
     gbk_list = parse_gbk_to_list(input_gbk)
