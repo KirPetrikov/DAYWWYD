@@ -125,7 +125,7 @@ It includes two functions:
 - `select_genes_from_gbk_to_fasta` select genes from gbk-file relative to given ones and according to the specified ranges
 
 ### `convert_multiline_fasta_to_oneline(input_fasta, output_fasta)`
-Convert sequences in fasta files from multiple lines entry with line breaks to single line entry.
+Convert sequences in fasta files from multiple lines entry with line breaks to single line entry. Default output file name `one_line_fasta.fasta`.
 
 ### `select_genes_from_gbk_to_fasta(input_gbk, genes, n_before, n_after, output_fasta)`
 You can pass a list of GOI names as `genes`, specify the up- and downstream ranges around them as `n_before` and `n_after`, and you will get a new fasta-file consists of translations of corresponding regions.
