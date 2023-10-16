@@ -7,7 +7,6 @@
 
 def parse_gbk_to_list(path_to_file: str) -> list:
     """Parse gbk-file by CDS in order of appearance
-       and return result_gbk_list
        to list of lists as:
        [
             ['First CDS coordinates',
