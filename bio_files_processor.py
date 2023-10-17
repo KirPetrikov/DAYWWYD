@@ -7,16 +7,15 @@
 """
 
 from src.parse_gbk import parse_gbk_to_list
+from src.file_names import file_name_creator
 
 
-def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = None):
+def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = 'one_line_seqs'):
     """Convert sequences in fasta files
        from multiple lines entry with line breaks
        to single line entry
     """
-    if output_fasta is None:
-        output_fasta = 'one_line_fasta'
-    output_fasta += '.fasta'
+    output_fasta = file_name_creator(output_file_name=output_fasta, file_extension='fasta')
     with open(input_fasta) as fasta_multiline:
         my_list = [fasta_multiline.readline().strip()]
         seq = ''
@@ -37,14 +36,13 @@ def select_genes_from_gbk_to_fasta(input_gbk: str,
                                    genes: list,
                                    n_before: int = 1,
                                    n_after: int = 1,
-                                   output_fasta: str = None):
+                                   output_fasta: str = 'results_from_gbk'):
     """Select from gbk-file and write to fasta-file
        genes with their translation
        from specified ranges around genes
        specified by names.
     """
-    if output_fasta is None:
-        output_fasta = 'selected_genes.fasta'
+    output_fasta = file_name_creator(output_file_name=output_fasta, file_extension='fasta')
     gbk_list = parse_gbk_to_list(input_gbk)
     selected_genes_idxs = []
     for gene_to_check in genes:
