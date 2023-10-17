@@ -19,6 +19,7 @@ import src.prot_seq_tool as ps
 import src.fastq_filter as ff
 from src.parse_fastq import parse_fastq
 from src.parse_fastq import write_fastq
+from src.file_names import file_name_creator
 
 
 def process_na(operation: str, seqs: list) -> list:
@@ -81,7 +82,7 @@ def filter_fastq(input_path: str,
                  gc_bounds: int | float | tuple = (20, 80),
                  len_bounds: int | float | tuple = (0, 2 ** 32),
                  quality_threshold: int | float = 0,
-                 output_filename: str = None,):
+                 output_filename: str = ''):
     """"Filters out sequences from fastq file by the specified conditions:
         - GC-content, inside interval include borders, or, if single value, not bigger than specified
         - length, inside interval include borders, or, if single value, not bigger than specified
@@ -100,8 +101,6 @@ def filter_fastq(input_path: str,
         phred_condition_check = ff.is_seq_pass_phred_filter(phred, quality_threshold)
         if gc_condition_check and len_condition_check and phred_condition_check:
             selected_seqs[seq_name] = seqs[seq_name]
-    if output_filename is None:
-        output_filename = input_path
-    output_filename += '.fastq'
+    output_filename = file_name_creator(input_path, output_filename, 'fastq')
     write_fastq(selected_seqs, output_filename)
     return
