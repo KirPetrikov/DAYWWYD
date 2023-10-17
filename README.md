@@ -80,7 +80,7 @@ Creates from fastq file new fastq file (in 'fastq_filtrator_resuls' subfolder) w
 - `gc_bounds` values for GC-content filter.
 - `len_bounds` values for lenght filter
 - `quality_threshold` value for phred scores filter (`float` or `int`)
-- `output_filename` you can specified (defaults is input file)
+- `output_filename` you can specified (defaults is input filename)
 
 **Intervals** for `gc_bounds` and `len_bounds` must be specified (*with bounds are included*):
 - as tuple `(lower_bound, upper_bound)`
@@ -125,17 +125,15 @@ It includes two functions:
 - `select_genes_from_gbk_to_fasta` select genes from gbk-file relative to given ones and according to the specified ranges
 
 ### `convert_multiline_fasta_to_oneline(input_fasta, output_fasta)`
-Convert sequences in fasta files from multiple lines entry with line breaks to single line entry. Default output file name `one_line_fasta.fasta`.
+Convert sequences in fasta files from multiple lines entry with line breaks to single line entry.
+Default output filename `one_line_seqs.fasta`.
 
 ### `select_genes_from_gbk_to_fasta(input_gbk, genes, n_before, n_after, output_fasta)`
 You can pass a list of GOI names as `genes`, specify the up- and downstream ranges around them as `n_before` and `n_after`, and you will get a new fasta-file consists of translations of corresponding regions.
-
-Select from gbk-file and write to fasta-file
-       genes with their translation
-       from specified ranges around genes
-       specified by names.
+If intervals overlap, regions will be repeated.
+Default output filename `results_from_gbk.fasta`.
 
 ## Autors
 - Kirill Petrikov - main development
 
-Also parts of proteins processig code (`prot_seq_tool.py`): Yury Popov, Gulgaz Muradova.    
+Parts of proteins processig code (`prot_seq_tool.py`): Yury Popov, Gulgaz Muradova.    
