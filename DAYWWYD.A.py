@@ -10,10 +10,9 @@
     Requirements (scripts must be in ./src):
     fastq_filter.py
     na_seq_tool.py
-    prot_seq_tool.pys
+    prot_seq_tool.py
 """
 
-# импортировать сразу нужные функции from ... import
 import src.na_seq_tool as nas
 import src.prot_seq_tool as ps
 import src.fastq_filter as ff
