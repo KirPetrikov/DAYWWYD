@@ -5,13 +5,15 @@
 from os import path
 
 
-def file_name_creator(input_path: str, output_file_name: str = '', file_extension: str = '') -> str:
+def file_name_creator(input_path: str = '',
+                      output_file_name: str = '',
+                      file_extension: str = '') -> str:
     """Constructs a filename:
         - returns only the name from the full path
         - creates a new name
-        - changes extension
+        - changes file extension
     """
-    if output_file_name == '':
+    if output_file_name == '':  # use input filename
         if file_extension == '':
             file_name = path.basename(input_path)
         else:
