@@ -6,7 +6,7 @@
 **DAYWWYD is set of scripts for different bioinformatics operations with sequences.**
 
 It consit of two main scrits:
-- `DAYWWYD.A`
+- `DAYWWYD.A.py`
 - `bio_files_processor.py`
 
 ## Requirements and dependencies
@@ -20,7 +20,7 @@ It consit of two main scrits:
 
 Service modules should be located in the `./src` folder.
 
-## DAYWWYD.A
+## `DAYWWYD.A.py`
 
 It includes three functions:
 - `process_na` operations on nucleic acids sequences
@@ -108,7 +108,7 @@ ATATTA
 /++*==
 """
 
-filter_fastq(fastq, gc_bounds = 10)
+filter_fastq('file.fastq', gc_bounds = 10, output_filename = 'filtered')
 
 """fastq_filtrator_resuls/filtered.fastq
 @B
@@ -118,7 +118,7 @@ ATATTA
 """
 ```
 
-## bio_files_processor
+## `bio_files_processor.py`
 
 It includes two functions:
 - `convert_multiline_fasta_to_oneline` remove line breaks within sequences
