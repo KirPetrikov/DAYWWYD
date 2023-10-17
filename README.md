@@ -9,14 +9,23 @@ It consit of two main scrits:
 - `DAYWWYD.A.py`
 - `bio_files_processor.py`
 
+## Installation
+Run
+`git clone git@github.com:KirPetrikov/DAYWWYD.git`
+
 ## Requirements and dependencies
+*All is included in the package. Please don't remove `src` folder or any of its content*
+
 `DAYWWYD.A` requires:
 - `na_seq_tool.py`
 - `prot_seq_tool.py`
 - `fastq_filter.py`
+- `parse_fastq.py`
+- `file_names.py`
 
 `bio_files_processor` requires:
 - `parse_gbk.py`
+- `file_names.py`
 
 Service modules should be located in the `./src` folder.
 
