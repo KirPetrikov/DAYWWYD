@@ -134,16 +134,19 @@ It includes tree functions:
 - `parse_blast_output` select one best hit for each query from file with results of Blast
 
 ### `convert_multiline_fasta_to_oneline(input_fasta, output_fasta)`
-Convert sequences in fasta files from multiple lines entry with line breaks to single line entry.
+Convert sequences in fasta files from multiple lines entries with line breaks to single line entries.
+
 Default output filename `one_line_seqs.fasta`.
 
 ### `select_genes_from_gbk_to_fasta(input_gbk, genes, n_before, n_after, output_fasta)`
 You can pass a list of GOI names as `genes`, specify the up- and downstream ranges around them as `n_before` and `n_after`, and you will get a new fasta-file consists of translations of corresponding regions.
 If intervals overlap, regions will be repeated.
+
 Default output filename `results_from_gbk.fasta`.
 
-### `parse_blast_output`(input_file, output_file)`
+### `parse_blast_output(input_file, output_file)`
 Takes file with results of Blast, select from it one top hit for each queryand save them to txt file sorted alphabetically.
+
 Default output filename `best_Blast_results.txt`.
 
 ## Autors
