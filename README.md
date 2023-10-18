@@ -128,10 +128,11 @@ ATATTA
 
 ## `bio_files_processor.py`
 
-It includes tree functions:
+It includes four functions:
 - `convert_multiline_fasta_to_oneline` remove line breaks within sequences
 - `select_genes_from_gbk_to_fasta` select genes from gbk-file relative to given ones and according to the specified ranges
 - `parse_blast_output` select one best hit for each query from file with results of Blast
+- `change_fasta_start_pos`rewrite sequence from specified nucleotide position
 
 ### `convert_multiline_fasta_to_oneline(input_fasta, output_fasta)`
 Convert sequences in fasta files from multiple lines entries with line breaks to single line entries.
@@ -148,6 +149,13 @@ Default output filename `results_from_gbk.fasta`.
 Takes file with results of Blast, select from it one top hit for each queryand save them to txt file sorted alphabetically.
 
 Default output filename `best_Blast_results.txt`.
+
+### `change_fasta_start_pos((input_fasta, shift, output_fasta)`
+You can specifiy nucleotide position (as positive or negative index: first is 0, last is -1) adn script rewrite the sequence (as it is circular) to new file.
+
+**Takes only single entry fasta.**
+
+Default output filename `shifted_seq.fasta`.
 
 ## Autors
 - Kirill Petrikov - main development
