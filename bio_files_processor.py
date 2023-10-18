@@ -56,3 +56,25 @@ def select_genes_from_gbk_to_fasta(input_gbk: str,
         for selected_idx in selected_genes_idxs:
             result_fasta.write('>' + gbk_list[selected_idx][1] + '\n')
             result_fasta.write(gbk_list[selected_idx][2] + '\n')
+
+
+def parse_blast_output(input_file: str, output_file: str = 'best_Blast_results'):
+    """Takes input_file, select from it
+        one top hit for each query
+        and save them to output_file.txt
+        sorted alphabetically
+    """
+    with open(input_file) as blast_results:
+        best_results = []
+        line = blast_results.readline()
+        while not line.startswith('Query #'):
+            line = blast_results.readline()
+        for line in blast_results:
+            if line.startswith('Description'):
+                first_result = blast_results.readline().split('    ')[0]
+                best_results.append(first_result.strip('.'))
+    best_results.sort()
+    output_file = file_name_creator('', output_file, 'txt')
+    with open(output_file, mode='w') as best_results_file:
+        for result in best_results:
+            best_results_file.write(result + '\n')
