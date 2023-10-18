@@ -78,3 +78,22 @@ def parse_blast_output(input_file: str, output_file: str = 'best_Blast_results')
     with open(output_file, mode='w') as best_results_file:
         for result in best_results:
             best_results_file.write(result + '\n')
+
+
+def change_fasta_start_pos(input_fasta: str, shift: int, output_fasta: str = 'shifted_seq'):
+    """Takes single entry fasta and rewrite
+        the sequence as circular
+        starting from the specified index character
+    """
+    with open(input_fasta) as fasta_file:
+        new_name = fasta_file.readline().strip() + '_shifted_to_' + str(shift)
+        input_seq = fasta_file.readline().strip()
+    if shift < 0:
+        shift += len(input_seq)
+    shifted_seq = input_seq[shift:len(input_seq) + 1]
+    for idx in range(shift):
+        shifted_seq += input_seq[idx]
+    output_file = file_name_creator('', output_fasta, 'fasta')
+    with open(output_file, mode='w') as shifted_fasta:
+        shifted_fasta.write(new_name + '\n')
+        shifted_fasta.write(shifted_seq)
