@@ -18,13 +18,13 @@ def filter_fastq(input_path: str,
                  len_thresholds: int | float | tuple = (0, 2 ** 32),
                  quality_threshold: int | float = 0,
                  output_path: str = 'filtered.fastq'):
-    """"Filters out sequences from fastq file by the specified conditions:
+    """Filters out sequences from fastq file by the specified conditions:
         - GC-content, inside interval include borders, or, if single value, not bigger than specified
         - length, inside interval include borders, or, if single value, not bigger than specified
         - average phred scores, not less than specified
         Default output file name 'filtered.fastq'
     """
-    records = list(SeqIO.parse(input_path, "fastq"))
+    records = list(SeqIO.parse(input_path, 'fastq'))
 
     filtered_1_gc_idxs = []
     filtered_2_len_idxs = []
@@ -44,27 +44,12 @@ def filter_fastq(input_path: str,
             filtered_2_len_idxs.append(idx)
 
     for idx in filtered_2_len_idxs:
-        phred_values = records[idx].letter_annotations["phred_quality"]
+        phred_values = records[idx].letter_annotations['phred_quality']
         if sum(phred_values) / len(phred_values) >= quality_threshold:
             filtered_3_phred_idxs.append(idx)
 
     for idx in filtered_3_phred_idxs:
         filtered_results.append(records[idx])
 
-    with open(output_path, "w") as file:
-        SeqIO.write(filtered_results, file, "fastq")
-
-
-min_gc_content = 37
-max_gc_content = 45
-min_length = 20
-max_length = 30
-min_quality = 33
-
-filter_fastq('example_fastq.fastq',
-             (min_gc_content, max_gc_content),
-             (min_length, max_length),
-             min_quality,
-             'my_res.fastq')
-
-filter_fastq('example_fastq.fastq')
+    with open(output_path, 'w') as file:
+        SeqIO.write(filtered_results, file, 'fastq')
