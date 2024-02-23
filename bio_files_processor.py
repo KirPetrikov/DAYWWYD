@@ -6,8 +6,62 @@
      and according to the specified ranges
 """
 
-from src.parse_gbk import parse_gbk_to_list
-from src.file_names import file_name_creator
+from os import path
+
+
+def file_name_creator(input_path: str = '',
+                      output_file_name: str = '',
+                      file_extension: str = '') -> str:
+    """Constructs a filename:
+        - returns only the name from the full path
+        - creates a new name
+        - changes file extension
+    """
+    if output_file_name == '':  # use input filename
+        if file_extension == '':
+            file_name = path.basename(input_path)
+        else:
+            file_name = '.'.join(path.basename(input_path).split('.')[:-1]) + '.' + file_extension
+            # work in case when input file name includes '.'
+    else:
+        if file_extension == '':
+            file_name = output_file_name
+        else:
+            file_name = output_file_name + '.' + file_extension
+    return file_name
+
+
+def parse_gbk_to_list(path_to_file: str) -> list:
+    """Parse gbk-file by CDS in order of appearance
+       to list of lists as:
+       [
+        ['First CDS coordinates',
+         'gene (if available) or CDS coordinates',
+         'translation (if available) or empty'],
+        ['Second CDS', 'gene/CDS', 'translation'],
+        etc.
+       ]
+    """
+    with open(path_to_file) as file:
+        result_gbk_list = []
+        line = file.readline()
+        counter = 0
+        while not line.startswith('     CDS'):
+            line = file.readline()
+        result_gbk_list.append([line.strip('CDS \n'), line.strip('CDS \n'), ''])
+        for line in file:
+            if line.strip().startswith('/gene'):
+                result_gbk_list[counter][1] = line.strip(' /gene="\n')
+            if line.strip().startswith('/translation'):
+                whole_translation = line.strip(' /translation="\n')
+                while not line.strip().endswith('"'):
+                    line = file.readline()
+                    whole_translation += line.strip(' "\n')
+                result_gbk_list[counter][2] = whole_translation
+            if line.startswith('     CDS'):
+                counter += 1
+                result_gbk_list.append([line.strip('CDS \n'), line.strip('CDS \n'), ''])
+    return result_gbk_list
 
 
 def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = 'one_line_seqs'):
