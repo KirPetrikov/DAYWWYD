@@ -34,7 +34,7 @@ class NucleicAcidSequence(BiologicalSequence):
         if self.complement_dict == None:
             raise NotImplementedError('It is a basic NA class. You should implement it for descendant class: DNASequence or RNASequence.')
         result = type(self)(''.join([self.complement_dict[nuc] for nuc in self.sequence]))
-        return result.sequence
+        return result
         
     def gc_content(self):
         gc_sum = self.sequence.upper().count('G') + self.sequence.upper().count('C')
