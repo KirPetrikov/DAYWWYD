@@ -64,7 +64,7 @@ class DNASequence(NucleicAcidSequence):
         'c': 'c', 'C': 'C'
     }
         result = RNASequence(''.join([transcription_dict[nuc] for nuc in self.sequence]))
-        return result.sequence
+        return result
 
     def __repr__(self):
         return f'DNASequence("{self.sequence}")'
