@@ -138,7 +138,7 @@ def convert_multiline_fasta_to_oneline(input_fasta: str, output_fasta: str = 'on
     ------
     input_fasta : str
         Path to input fasta-file
-    output_fasta : bool, default 'one_line_seqs.fasta'
+    output_fasta : str, default 'one_line_seqs.fasta'
         Path to output fasta-file
     """
 
